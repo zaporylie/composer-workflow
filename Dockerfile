@@ -1,3 +1,11 @@
-FROM drupaldocker/php:cli
+FROM composer/composer:1.1-alpine
 
-RUN composer create-project drupal-composer/drupal-project:8.x-dev some-dir --stability dev --no-interaction
+ADD ./ /var/www/html
+
+RUN cd /var/www/html && composer install --no-interaction --prefer-dist 
+
+WORKDIR /var/www/html
+
+VOLUME /var/www/html
+
+ENTRYPOINT [ "/bin/true" ]
